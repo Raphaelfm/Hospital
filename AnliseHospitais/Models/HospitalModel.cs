@@ -13,7 +13,28 @@
         public string? TpGestao { get; set; }
         public string? CodigoTipoUnidade { get; set;}
         public string? DescricaoTipoUnidade { get; set; }
-
+        public string? NaturezaJuridica { get; set; }
+        public string? DescricaoNatureza { get; set; }
+        public string? NomeLogradouro { get; set; }
+        public string? NumeroEndereco { get; set; }
+        public string? NomeComplemento { get; set; }
+        public string? NomeBairro { get; set; }
+        public string? CodigoCep { get; set; }
+        public string? NumeroTelefone { get; set; }
+        public string? Email { get; set; }
+        public string? LeitosExistentes { get; set; }
+        public string? LeitosSus { get; set; }
+        public string? UtiTotalExistentes { get; set; }
+        public string? UtiTotalSus { get; set; }
+        public string? UtiAdultoExistente { get; set; }
+        public string? UtiAdultoSus { get; set; }
+        public string? UtiPediatricoExistentes { get; set; }
+        public string? UtiPediatricoSus { get; set; }
+        public string? UtiNeoNatalExistentes { get; set; }
+        public string? UtiNeoNatalSus { get; set; }
+        public string? UtiQueimadoExistentes { get; set; }
+        public string? UtiQueimadoSus { get; set; }
+        public string? UtiCoronarianaExistentes { get; set; }
+        public string? UtiCoronarianaSus { get; set; }
     }
 }
-//COMP,"REGIAO","UF","MUNICIPIO","MOTIVO DESABILITACAO","CNES","NOME ESTABELECIMENTO","RAZAO SOCIAL","TP_GESTAO","CO_TIPO_UNIDADE","DS_TIPO_UNIDADE","NATUREZA_JURIDICA","DESC_NATUREZA_JURIDICA","NO_LOGRADOURO","NU_ENDERECO","NO_COMPLEMENTO","NO_BAIRRO","CO_CEP","NU_TELEFONE","NO_EMAIL","LEITOS EXISTENTE","LEITOS SUS","UTI TOTAL - EXIST","UTI TOTAL - SUS","UTI ADULTO - EXIST","UTI ADULTO - SUS","UTI PEDIATRICO - EXIST","UTI PEDIATRICO - SUS","UTI NEONATAL - EXIST","UTI NEONATAL - SUS","UTI QUEIMADO - EXIST","UTI QUEIMADO - SUS","UTI CORONARIANA - EXIST","UTI CORONARIANA - SUS"
