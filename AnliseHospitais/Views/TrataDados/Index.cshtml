@@ -1,0 +1,30 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>Para importar dados, clique <a href="@Url.Action("ImportarHospitais", "TrataDados")">aqui</a></p>
+
+@using (Html.BeginForm("ImportarHospitais", "TrataDados", FormMethod.Post, new {enctype="multipart/form-data"}))
+{
+    <div class="form-group">
+        <label for="arquivoCsv">Selecione um arquivo CSV:</label>
+        <input type="file" id="arquivoCsv" name="arquivoCsv" accept=".csv" required enctype='multipart/form-data'/>
+        @*<input type="file" name="arquivoCsv" id="arquivoCsv" accept=".csv" required />*@
+    </div>
+
+    <button type="submit" class="btn btn-primary">Enviar</button>
+}
+
+@*  
+
+ <form method="post" asp-action="ImportarHospitais" asp-controller="TrataDados" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="arquivoCsv" >Selecione um arquivo CSV:</label>
+            <input type="file" class="form-control-file" id="arquivoCsv" name="arquivoCsv">
+        </div>    
+    </form>
+
+    <button type="submit" class="btn btn-primary">Enviar</button>*@
