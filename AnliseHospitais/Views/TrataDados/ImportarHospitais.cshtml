@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewData["Title"] = "ImportarHospitais";
+}
+
+<h1>ImportarHospitais</h1>
+
+@using (Html.BeginForm("ImportarHospitais", "TrataDados", FormMethod.Post, new { enctype = "multipart/form-data"}))
+{
+    <div class="form-group">
+        <label for="arquivoCsv">Selecione um arquivo CSV:</label>
+        <input type="file" name="arquivoCsv" id="arquivoCsv" accept=".csv" required />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Enviar</button>
+}
