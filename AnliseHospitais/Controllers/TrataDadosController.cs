@@ -1,4 +1,5 @@
-﻿using AnliseHospitais.Utils;
+﻿using AnliseHospitais.Data;
+using AnliseHospitais.Utils;
 using Microsoft.AspNetCore.Mvc;
 using System.Web;
 
@@ -7,10 +8,12 @@ namespace AnliseHospitais.Controllers
     public class TrataDadosController : Controller
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
+        ApplicationDbContext _context;
         
-        public  TrataDadosController(IWebHostEnvironment webHostEnvironment)
+        public  TrataDadosController(IWebHostEnvironment webHostEnvironment, ApplicationDbContext context)
         {
             _webHostEnvironment = webHostEnvironment;
+            _context = context;
         }
 
         public IActionResult Index()
@@ -34,6 +37,15 @@ namespace AnliseHospitais.Controllers
                 var hospitais = csvReader.LerCsv(caminhoArquivo);
 
                 // Código  para salvar hospitais no banco de dados
+                if (ModelState.IsValid)
+                {
+                    foreach (var hospital in hospitais)
+                    {
+                        _context.Add(hospital);
+                    }
+                    await _context.SaveChangesAsync();
+                }
+
                 return RedirectToAction("Index", "Home");
             }
 
