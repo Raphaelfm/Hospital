@@ -1,6 +1,40 @@
-﻿@{
+﻿@model IEnumerable<AnliseHospitais.Models.HospitalModel>
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
 </div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RazaoSocial)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Uf)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RazaoSocial)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Uf)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
