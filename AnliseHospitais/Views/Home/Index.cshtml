@@ -1,40 +1,109 @@
-﻿@model IEnumerable<AnliseHospitais.Models.HospitalModel>
+﻿@model IEnumerable<AnliseHospitais.Models.HospitaisPorEstado>
 
 @{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
+<div class="row">
+    <div class="col-md-6">
+        <h2>Gráfico de Hospitais por Estado</h2>
+        <div class="form-group">
+            <label for="tipo-grafico">Tipo de gráfico:</label>
+            <select class="form-control" id="tipo-grafico">
+                <option value="pie">Pizza</option>
+                <option value="bar">Barras</option>
+                <option value="line">Linhas</option>
+                <option value="radar">Radar</option>
+            </select>
+        </div>
+        <canvas id="myChart" width="600" height="600"></canvas>
+    </div>
+    <div class="col-md-6">
+        <h2>Tabela de Hospitais</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Estado
+                    </th>
+                    <th>
+                        Quantidade de Hospitais
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model) {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Estado)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.QuantidadeDeHospitais)
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>    
 </div>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RazaoSocial)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Uf)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RazaoSocial)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Uf)
-            </td>
-        </tr>
+@section scripts{
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        var hospitaisPorEstado = JSON.parse('@Html.Raw(Json.Serialize(Model))');
+        var estados = [];
+        var quantidadesDeHospitais = [];
+
+        hospitaisPorEstado.forEach(function(item) {
+            estados.push(item.estado);
+            quantidadesDeHospitais.push(item.quantidadeDeHospitais);
+        });
+
+        var backgroundColors = [
+          '#FF6384', '#36A2EB', '#FFCE56', '#C70039', '#FF5733', '#8E44AD',
+          '#FFA07A', '#006266', '#0E6251', '#1B4F72', '#0652DD', '#2E86C1',
+          '#F1C40F', '#D35400', '#7D6608', '#154360', '#6C3483', '#C0392B',
+          '#E74C3C', '#8E44AD', '#2980B9', '#27AE60', '#2C3E50', '#34495E',
+          '#8E44AD', '#34495E', '#2E4053'
+        ];
+
+        var borderColor = backgroundColors;
+
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart;
+
+        function createChart(type) {
+            if (myChart) {
+                myChart.destroy();
+            }
+
+            myChart = new Chart(ctx, {
+                type: type,
+                data: {
+                    labels: estados,
+                    datasets: [{
+                        data: quantidadesDeHospitais,
+                        backgroundColor: backgroundColors,
+                        borderColor: borderColor,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: false,
+                    maintainAspectRatio: false,
+                    title: {
+                        display: true,
+                        text: 'Quantidade de hospitais por estado'
+                    }
+                }
+            });
+        }
+
+        createChart('pie');
+
+        $('#tipo-grafico').on('change', function() {
+            var tipoGrafico = $(this).val();
+            createChart(tipoGrafico);
+        });
+    </script>
 }
-    </tbody>
-</table>

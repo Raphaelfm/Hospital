@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using AnliseHospitais.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AnliseHospitais.Controllers
 {
@@ -17,9 +18,15 @@ namespace AnliseHospitais.Controllers
             _context = context;
         }
 
+        [Authorize]
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Hospitais.ToListAsync());
+            var hospitaisPorEstado = await _context.Hospitais
+                .GroupBy(x => x.Uf)
+                .Select(x => new HospitaisPorEstado { Estado = x.Key, QuantidadeDeHospitais = x.Count() })
+                .ToListAsync();
+
+            return View(hospitaisPorEstado);
         }
 
         public IActionResult Privacy()
