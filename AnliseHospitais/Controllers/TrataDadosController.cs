@@ -24,19 +24,18 @@ namespace AnliseHospitais.Controllers
         [HttpPost]
         public async Task<IActionResult> ImportarHospitais(IFormFile arquivoCsv)
         {
-            if(arquivoCsv != null && arquivoCsv.Length > 0)
+            if (arquivoCsv != null && arquivoCsv.Length > 0)
             {
-                //var caminhoArquivo = Path.Combine(_webHostEnvironment.ContentRootPath, "App_Data", Path.GetFileName(arquivoCsv.FileName));
-                var caminhoArquivo = @"D:\Downloads\Leitos_2023.csv";
-                using (var stream = new FileStream(caminhoArquivo, FileMode.Create))
+                var caminhoArquivoTemporario = Path.GetTempFileName();
+                using (var stream = new FileStream(caminhoArquivoTemporario, FileMode.Create))
                 {
                     await arquivoCsv.CopyToAsync(stream);
                 }
 
                 var csvReader = new Utilitarios();
-                var hospitais = csvReader.LerCsv(caminhoArquivo);
+                var hospitais = csvReader.LerCsv(caminhoArquivoTemporario);
 
-                // Código  para salvar hospitais no banco de dados
+                // Código para salvar hospitais no banco de dados
                 if (ModelState.IsValid)
                 {
                     foreach (var hospital in hospitais)
