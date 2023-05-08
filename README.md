@@ -32,3 +32,6 @@ If you feel confortable by using cmd, you may open the folder AnliseHospitais wi
 
 ## Remember to install .net sdk
 https://dotnet.microsoft.com/en-us/download/dotnet/7.0
+
+![image](https://user-images.githubusercontent.com/51061090/236844959-1f5bb422-3c66-468b-85aa-9fd7477e43ce.png)
+
