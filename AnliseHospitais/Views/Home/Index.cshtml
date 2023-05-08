@@ -10,10 +10,11 @@
         <div class="form-group">
             <label for="tipo-grafico">Tipo de gráfico:</label>
             <select class="form-control" id="tipo-grafico">
+                <option value="radar">Radar</option>
                 <option value="pie">Pizza</option>
                 <option value="bar">Barras</option>
-                <option value="line">Linhas</option>
-                <option value="radar">Radar</option>
+                <option value="line">Linhas</option>  
+                <option value="bubble">Scatter</option>
             </select>
         </div>
         <canvas id="myChart" width="600" height="600"></canvas>
@@ -93,13 +94,13 @@
                     maintainAspectRatio: false,
                     title: {
                         display: true,
-                        text: 'Quantidade de hospitais por estado'
+                        text: 'Grafico de Hospitais por UF'
                     }
                 }
             });
         }
 
-        createChart('pie');
+        createChart('radar');
 
         $('#tipo-grafico').on('change', function() {
             var tipoGrafico = $(this).val();
