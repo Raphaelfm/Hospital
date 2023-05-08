@@ -17,7 +17,7 @@ namespace AnliseHospitais.Controllers
             _logger = logger;
             _context = context;
         }
-
+        
         [Authorize]
         public async Task<IActionResult> Index()
         {
