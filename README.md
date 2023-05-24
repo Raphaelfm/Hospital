@@ -37,4 +37,3 @@ If you feel confortable by using cmd, you may open the folder AnliseHospitais wi
 https://dotnet.microsoft.com/en-us/download/dotnet/7.0
 
 
-
