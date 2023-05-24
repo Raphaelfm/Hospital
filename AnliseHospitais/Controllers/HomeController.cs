@@ -4,6 +4,7 @@ using System.Diagnostics;
 using AnliseHospitais.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
+using System.Linq;
 
 namespace AnliseHospitais.Controllers
 {
@@ -27,6 +28,16 @@ namespace AnliseHospitais.Controllers
                 .ToListAsync();
 
             return View(hospitaisPorEstado);
+        }
+
+        public async Task<IActionResult> Leitos()
+        {
+            var leitosPorTipoHospitais = await _context.Hospitais
+                .GroupBy(x => x.DescricaoNatureza)
+                .Select(x => new HospitalModel { DescricaoNatureza = x.Key, LeitosExistentes = x.Sum(h => h.LeitosExistentes) })
+                .ToListAsync();
+
+            return View(leitosPorTipoHospitais);
         }
 
         public IActionResult Privacy()

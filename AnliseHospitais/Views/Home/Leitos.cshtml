@@ -1,0 +1,106 @@
+﻿@model IEnumerable<AnliseHospitais.Models.HospitalModel>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <h2>Gráfico de Descrição Natureza dos Hospitais</h2>
+        <div class="form-group">
+            <label for="tipo-grafico">Tipo de gráfico:</label>
+            <select class="form-control" id="tipo-grafico">
+                <option value="radar">Radar</option>
+                <option value="pie">Pizza</option>
+                <option value="bar">Barras</option>
+                <option value="line">Linhas</option>  
+                <option value="bubble">Scatter</option>
+            </select>
+        </div>
+        <canvas id="myChart" width="600" height="600"></canvas>
+    </div>
+    <div class="col-md-6">
+        <h2>Tabela de Hospitais</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Descrição
+                    </th>
+                    <th>
+                        Quantidade de Hospitais
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model) {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DescricaoNatureza)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LeitosExistentes)
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>    
+</div>
+
+@section scripts{
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        var hospitaisPorEstado = JSON.parse('@Html.Raw(Json.Serialize(Model))');
+        var estados = [];
+        var quantidadesDeHospitais = [];
+
+        hospitaisPorEstado.forEach(function(item) {
+            estados.push(item.descricaoNatureza);
+            quantidadesDeHospitais.push(item.leitosExistentes);
+        });
+
+        var backgroundColors = [
+          '#FF6384', '#36A2EB', '#FFCE56'
+        ];
+
+        var borderColor = backgroundColors;
+
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart;
+
+        function createChart(type) {
+            if (myChart) {
+                myChart.destroy();
+            }
+
+            myChart = new Chart(ctx, {
+                type: type,
+                data: {
+                    labels: estados,
+                    datasets: [{
+                        data: quantidadesDeHospitais,
+                        backgroundColor: backgroundColors,
+                        borderColor: borderColor,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: false,
+                    maintainAspectRatio: false,
+                    title: {
+                        display: true,
+                        text: 'Grafico de Hospitais por UF'
+                    }
+                }
+            });
+        }
+
+        createChart('radar');
+
+        $('#tipo-grafico').on('change', function() {
+            var tipoGrafico = $(this).val();
+            createChart(tipoGrafico);
+        });
+    </script>
+}
