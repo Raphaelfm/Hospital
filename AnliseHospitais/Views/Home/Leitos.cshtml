@@ -9,10 +9,10 @@
         <h2>Gráfico de Descrição Natureza dos Hospitais</h2>
         <div class="form-group">
             <label for="tipo-grafico">Tipo de gráfico:</label>
-            <select class="form-control" id="tipo-grafico">
+            <select class="form-control" id="tipo-grafico">                
+                <option value="bar">Barras</option>
                 <option value="radar">Radar</option>
                 <option value="pie">Pizza</option>
-                <option value="bar">Barras</option>
                 <option value="line">Linhas</option>  
                 <option value="bubble">Scatter</option>
             </select>
@@ -90,13 +90,13 @@
                     maintainAspectRatio: false,
                     title: {
                         display: true,
-                        text: 'Grafico de Hospitais por UF'
+                        text: 'Grafico quantidade por descricao'
                     }
                 }
             });
         }
 
-        createChart('radar');
+        createChart('bar');
 
         $('#tipo-grafico').on('change', function() {
             var tipoGrafico = $(this).val();
