@@ -1,8 +1,9 @@
-﻿@{
-    ViewData["Title"] = "Distribuica oGeografica Hospitais";
+﻿
+@{
+    ViewData["Title"] = "Nordeste";
 }
 
-<h1>Distribuicao Geografica Geral de Hospitais no Brasil</h1>
+<h1>Nordeste</h1>
 
 <div id="chart-container">
     <canvas id="chart"></canvas>
@@ -44,7 +45,7 @@
                 plugins: {
                     title: {
                         display: true,
-                        text: 'Distribuição Geográfica de Hospitais'
+                        text: 'Hospitais Nordeste'
                     },
                     legend: {
                         display: false
@@ -59,3 +60,4 @@
     // Carregar o gráfico inicialmente
     carregarGrafico();
 </script>
+
