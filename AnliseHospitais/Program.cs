@@ -2,6 +2,8 @@ using AnliseHospitais.Data;
 using AnliseHospitais.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using AnliseHospitais.Repositories;
+using AnliseHospitais.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,11 +11,15 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseMySql(connectionString, new MySqlServerVersion(new Version(8, 0))));
+
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
+
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddScoped<IRegioesRepository, RegioesRepository>();
 
 var app = builder.Build();
 
