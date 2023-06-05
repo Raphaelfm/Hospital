@@ -26,27 +26,7 @@ namespace AnliseHospitais.Controllers
         {
             string regiao = "CENTRO-OESTE";
 
-            List<(string, int)> contagemHospitais = _regioesRepository.GetHospitaisPorRegiao(regiao);
-
-            List<string> labels = new List<string>();
-            List<int> data = new List<int>();
-
-            foreach (var item in contagemHospitais)
-            {
-                labels.Add(item.Item1);
-                data.Add(item.Item2);
-            }
-
-            ViewBag.Labels = labels;
-            ViewBag.Data = data;
-
-            // Obtenha a lista de estados e municípios do banco de dados
-            List<string?> estados = _context.Hospitais.Select(x => x.Uf).Distinct().ToList();
-            List<string?> municipios = _context.Hospitais.Select(x => x.Municipio).Distinct().ToList();
-
-            // Passe os valores para a ViewBag
-            ViewBag.Estados = estados;
-            ViewBag.Municipios = municipios;
+            ObterDadosRegiao(regiao);
 
             // Retorne os dados para a view
             return View();
@@ -56,27 +36,7 @@ namespace AnliseHospitais.Controllers
         {
             string regiao = "NORDESTE";
 
-            List<(string, int)> contagemHospitais = _regioesRepository.GetHospitaisPorRegiao(regiao);
-
-            List<string> labels = new List<string>();
-            List<int> data = new List<int>();
-
-            foreach (var item in contagemHospitais)
-            {
-                labels.Add(item.Item1);
-                data.Add(item.Item2);
-            }
-
-            ViewBag.Labels = labels;
-            ViewBag.Data = data;
-
-            // Obtenha a lista de estados e municípios do banco de dados
-            List<string?> estados = _context.Hospitais.Select(x => x.Uf).Distinct().ToList();
-            List<string?> municipios = _context.Hospitais.Select(x => x.Municipio).Distinct().ToList();
-
-            // Passe os valores para a ViewBag
-            ViewBag.Estados = estados;
-            ViewBag.Municipios = municipios;
+            ObterDadosRegiao(regiao);
 
             // Retorne os dados para a view
             return View();
@@ -86,27 +46,7 @@ namespace AnliseHospitais.Controllers
         {
             string regiao = "NORTE";
 
-            List<(string, int)> contagemHospitais = _regioesRepository.GetHospitaisPorRegiao(regiao);
-
-            List<string> labels = new List<string>();
-            List<int> data = new List<int>();
-
-            foreach (var item in contagemHospitais)
-            {
-                labels.Add(item.Item1);
-                data.Add(item.Item2);
-            }
-
-            ViewBag.Labels = labels;
-            ViewBag.Data = data;
-
-            // Obtenha a lista de estados e municípios do banco de dados
-            List<string?> estados = _context.Hospitais.Select(x => x.Uf).Distinct().ToList();
-            List<string?> municipios = _context.Hospitais.Select(x => x.Municipio).Distinct().ToList();
-
-            // Passe os valores para a ViewBag
-            ViewBag.Estados = estados;
-            ViewBag.Municipios = municipios;
+            ObterDadosRegiao(regiao);
 
             // Retorne os dados para a view
             return View();
@@ -116,27 +56,7 @@ namespace AnliseHospitais.Controllers
         {
             string regiao = "SUDESTE";
 
-            List<(string, int)> contagemHospitais = _regioesRepository.GetHospitaisPorRegiao(regiao);
-
-            List<string> labels = new List<string>();
-            List<int> data = new List<int>();
-
-            foreach (var item in contagemHospitais)
-            {
-                labels.Add(item.Item1);
-                data.Add(item.Item2);
-            }
-
-            ViewBag.Labels = labels;
-            ViewBag.Data = data;
-
-            // Obtenha a lista de estados e municípios do banco de dados
-            List<string?> estados = _context.Hospitais.Select(x => x.Uf).Distinct().ToList();
-            List<string?> municipios = _context.Hospitais.Select(x => x.Municipio).Distinct().ToList();
-
-            // Passe os valores para a ViewBag
-            ViewBag.Estados = estados;
-            ViewBag.Municipios = municipios;
+            ObterDadosRegiao(regiao);
 
             // Retorne os dados para a view
             return View();
@@ -146,6 +66,14 @@ namespace AnliseHospitais.Controllers
         {
             string regiao = "SUL";
 
+            ObterDadosRegiao(regiao);
+
+            // Retorne os dados para a view
+            return View();
+        }
+
+        private void ObterDadosRegiao(string regiao)
+        {
             List<(string, int)> contagemHospitais = _regioesRepository.GetHospitaisPorRegiao(regiao);
 
             List<string> labels = new List<string>();
@@ -167,9 +95,7 @@ namespace AnliseHospitais.Controllers
             // Passe os valores para a ViewBag
             ViewBag.Estados = estados;
             ViewBag.Municipios = municipios;
-
-            // Retorne os dados para a view
-            return View();
         }
+
     }
 }

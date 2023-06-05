@@ -68,8 +68,8 @@ namespace AnliseHospitais.Controllers
             ViewBag.Data = data;
 
             // Obtenha a lista de estados e municípios do banco de dados
-            List<string> estados = _context.Hospitais.Select(x => x.Uf).Distinct().ToList();
-            List<string> municipios = _context.Hospitais.Select(x => x.Municipio).Distinct().ToList();
+            List<string?> estados = _context.Hospitais.Select(x => x.Uf).Distinct().ToList();
+            List<string?> municipios = _context.Hospitais.Select(x => x.Municipio).Distinct().ToList();
 
             // Passe os valores para a ViewBag
             ViewBag.Estados = estados;
