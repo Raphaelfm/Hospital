@@ -40,6 +40,112 @@ namespace AnliseHospitais.Controllers
             return View(leitosPorTipoHospitais);
         }
 
+        public IActionResult DistribuicaoGeograficaHospitais()
+        {
+            IQueryable<HospitalModel> query = _context.Hospitais.AsQueryable();
+
+            var contagemHospitais = query
+                .GroupBy(x => new { x.Regiao, x.Uf, x.Municipio })
+                .Select(x => new
+                {
+                    Regiao = x.Key.Regiao,
+                    Uf = x.Key.Uf,
+                    Municipio = x.Key.Municipio,
+                    Quantidade = x.Count()
+                })
+                .ToList();
+
+            List<string> labels = new List<string>();
+            List<int> data = new List<int>();
+
+            foreach (var item in contagemHospitais)
+            {
+                labels.Add($"{item.Regiao} - {item.Uf} - {item.Municipio}");
+                data.Add(item.Quantidade);
+            }
+
+            ViewBag.Labels = labels;
+            ViewBag.Data = data;
+
+            // Obtenha a lista de estados e municípios do banco de dados
+            List<string> estados = _context.Hospitais.Select(x => x.Uf).Distinct().ToList();
+            List<string> municipios = _context.Hospitais.Select(x => x.Municipio).Distinct().ToList();
+
+            // Passe os valores para a ViewBag
+            ViewBag.Estados = estados;
+            ViewBag.Municipios = municipios;
+
+            // Retorne os dados para a view
+            return View();
+        }
+
+        //public IActionResult DistribuicaoGeograficaHospitais()
+        //{
+        //    // Realize a análise para contar a quantidade de hospitais por região, estado e município
+        //    var contagemHospitais = _context.Hospitais
+        //        .GroupBy(x => new { x.Regiao, x.Uf, x.Municipio })
+        //        .Select(x => new
+        //        {
+        //            Regiao = x.Key.Regiao,
+        //            Uf = x.Key.Uf,
+        //            Municipio = x.Key.Municipio,
+        //            Quantidade = x.Count()
+        //        })
+        //        .ToList();
+
+        //    // Crie os dados para o gráfico
+        //    List<string> labels = new List<string>();
+        //    List<int> data = new List<int>();
+
+        //    foreach (var item in contagemHospitais)
+        //    {
+        //        labels.Add($"{item.Regiao} - {item.Uf} - {item.Municipio}");
+        //        data.Add(item.Quantidade);
+        //    }
+
+        //    // Passe os dados do gráfico para a view
+        //    ViewBag.Labels = labels;
+        //    ViewBag.Data = data;
+
+        //    return View();
+        //}
+
+
+        //public IActionResult DistribuicaoGeograficaHospitais()
+        //{
+        //    // Realize a análise para contar a quantidade de hospitais por região, estado e município
+        //    var contagemHospitais = _context.Hospitais
+        //        .GroupBy(x => new { x.Regiao, x.Uf, x.Municipio })
+        //        .Select(x => new
+        //        {
+        //            Regiao = x.Key.Regiao,
+        //            Uf = x.Key.Uf,
+        //            Municipio = x.Key.Municipio,
+        //            Quantidade = x.Count()
+        //        })
+        //        .ToList();
+
+        //    // Crie os dados para o gráfico
+        //    List<string> labels = new List<string>();
+        //    List<int> data = new List<int>();
+
+        //    foreach (var item in contagemHospitais)
+        //    {
+        //        labels.Add($"{item.Regiao} - {item.Uf} - {item.Municipio}");
+        //        data.Add(item.Quantidade);
+        //    }
+
+        //    // Crie um objeto com os dados do gráfico
+        //    var chartData = new
+        //    {
+        //        Labels = labels,
+        //        Data = data
+        //    };
+
+        //    return Json(chartData);
+        //}
+
+
         public IActionResult Privacy()
         {
             return View();

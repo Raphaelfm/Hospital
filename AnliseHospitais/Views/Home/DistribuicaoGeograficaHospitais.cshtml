@@ -1,0 +1,61 @@
+﻿@{
+    ViewData["Title"] = "DistribuicaoGeograficaHospitais";
+}
+
+<h1>DistribuicaoGeograficaHospitais</h1>
+
+<div id="chart-container">
+    <canvas id="chart"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Função para carregar os dados iniciais do gráfico
+    function carregarGrafico() {
+        const ctx = document.getElementById("chart").getContext("2d");
+        const labels = @Html.Raw(Json.Serialize(ViewBag.Labels));
+        const data = @Html.Raw(Json.Serialize(ViewBag.Data));
+
+        const datasets = [{
+            label: 'Quantidade',
+            data: data,
+            backgroundColor: 'rgba(54, 162, 235, 0.5)', // Cor de preenchimento das barras
+            borderColor: 'rgb(54, 162, 235)', // Cor da borda das barras
+            borderWidth: 1 // Largura da borda das barras
+        }];
+
+        const config = {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: datasets
+            },
+            options: {
+                responsive: true,
+                indexAxis: 'y',
+                scales: {
+                    x: {
+                        stacked: true
+                    },
+                    y: {
+                        stacked: true
+                    }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Distribuição Geográfica de Hospitais'
+                    },
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        };
+
+        new Chart(ctx, config);
+    }
+
+    // Carregar o gráfico inicialmente
+    carregarGrafico();
+</script>
