@@ -1,5 +1,7 @@
 ﻿using AnliseHospitais.Data;
+using AnliseHospitais.Interfaces;
 using AnliseHospitais.Models;
+using AnliseHospitais.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AnliseHospitais.Controllers
@@ -7,10 +9,12 @@ namespace AnliseHospitais.Controllers
     public class DistribuicaoGeograficaController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IRegioesRepository _regioesRepository;
 
-        public DistribuicaoGeograficaController(ApplicationDbContext context)
+        public DistribuicaoGeograficaController(ApplicationDbContext context, IRegioesRepository regioesRepository)
         {
             _context = context;
+            _regioesRepository = regioesRepository;
         }
 
         public IActionResult Index()
@@ -20,36 +24,25 @@ namespace AnliseHospitais.Controllers
 
         public IActionResult CentroOeste()
         {
-            IQueryable<HospitalModel> query = _context.Hospitais.AsQueryable();
             string regiao = "CENTRO-OESTE";
 
-            var contagemHospitais = query
-                .GroupBy(x => new { x.Regiao, x.Uf, x.Municipio })
-                .Select(x => new
-                {
-                    Regiao = x.Key.Regiao,
-                    Uf = x.Key.Uf,
-                    Municipio = x.Key.Municipio,
-                    Quantidade = x.Count()
-                })
-                .Where(r => r.Regiao == regiao)
-                .ToList();
+            List<(string, int)> contagemHospitais = _regioesRepository.GetHospitaisPorRegiao(regiao);
 
             List<string> labels = new List<string>();
             List<int> data = new List<int>();
 
             foreach (var item in contagemHospitais)
             {
-                labels.Add($"{item.Regiao} - {item.Uf} - {item.Municipio}");
-                data.Add(item.Quantidade);
+                labels.Add(item.Item1);
+                data.Add(item.Item2);
             }
 
             ViewBag.Labels = labels;
             ViewBag.Data = data;
 
             // Obtenha a lista de estados e municípios do banco de dados
-            List<string> estados = _context.Hospitais.Select(x => x.Uf).Distinct().ToList();
-            List<string> municipios = _context.Hospitais.Select(x => x.Municipio).Distinct().ToList();
+            List<string?> estados = _context.Hospitais.Select(x => x.Uf).Distinct().ToList();
+            List<string?> municipios = _context.Hospitais.Select(x => x.Municipio).Distinct().ToList();
 
             // Passe os valores para a ViewBag
             ViewBag.Estados = estados;
@@ -61,36 +54,25 @@ namespace AnliseHospitais.Controllers
 
         public IActionResult Nordeste()
         {
-            IQueryable<HospitalModel> query = _context.Hospitais.AsQueryable();
             string regiao = "NORDESTE";
 
-            var contagemHospitais = query
-                .GroupBy(x => new { x.Regiao, x.Uf, x.Municipio })
-                .Select(x => new
-                {
-                    Regiao = x.Key.Regiao,
-                    Uf = x.Key.Uf,
-                    Municipio = x.Key.Municipio,
-                    Quantidade = x.Count()
-                })
-                .Where(r => r.Regiao == regiao)
-                .ToList();
+            List<(string, int)> contagemHospitais = _regioesRepository.GetHospitaisPorRegiao(regiao);
 
             List<string> labels = new List<string>();
             List<int> data = new List<int>();
 
             foreach (var item in contagemHospitais)
             {
-                labels.Add($"{item.Regiao} - {item.Uf} - {item.Municipio}");
-                data.Add(item.Quantidade);
+                labels.Add(item.Item1);
+                data.Add(item.Item2);
             }
 
             ViewBag.Labels = labels;
             ViewBag.Data = data;
 
             // Obtenha a lista de estados e municípios do banco de dados
-            List<string> estados = _context.Hospitais.Select(x => x.Uf).Distinct().ToList();
-            List<string> municipios = _context.Hospitais.Select(x => x.Municipio).Distinct().ToList();
+            List<string?> estados = _context.Hospitais.Select(x => x.Uf).Distinct().ToList();
+            List<string?> municipios = _context.Hospitais.Select(x => x.Municipio).Distinct().ToList();
 
             // Passe os valores para a ViewBag
             ViewBag.Estados = estados;
@@ -102,36 +84,25 @@ namespace AnliseHospitais.Controllers
 
         public IActionResult Norte()
         {
-            IQueryable<HospitalModel> query = _context.Hospitais.AsQueryable();
             string regiao = "NORTE";
 
-            var contagemHospitais = query
-                .GroupBy(x => new { x.Regiao, x.Uf, x.Municipio })
-                .Select(x => new
-                {
-                    Regiao = x.Key.Regiao,
-                    Uf = x.Key.Uf,
-                    Municipio = x.Key.Municipio,
-                    Quantidade = x.Count()
-                })
-                .Where(r => r.Regiao == regiao)
-                .ToList();
+            List<(string, int)> contagemHospitais = _regioesRepository.GetHospitaisPorRegiao(regiao);
 
             List<string> labels = new List<string>();
             List<int> data = new List<int>();
 
             foreach (var item in contagemHospitais)
             {
-                labels.Add($"{item.Regiao} - {item.Uf} - {item.Municipio}");
-                data.Add(item.Quantidade);
+                labels.Add(item.Item1);
+                data.Add(item.Item2);
             }
 
             ViewBag.Labels = labels;
             ViewBag.Data = data;
 
             // Obtenha a lista de estados e municípios do banco de dados
-            List<string> estados = _context.Hospitais.Select(x => x.Uf).Distinct().ToList();
-            List<string> municipios = _context.Hospitais.Select(x => x.Municipio).Distinct().ToList();
+            List<string?> estados = _context.Hospitais.Select(x => x.Uf).Distinct().ToList();
+            List<string?> municipios = _context.Hospitais.Select(x => x.Municipio).Distinct().ToList();
 
             // Passe os valores para a ViewBag
             ViewBag.Estados = estados;
@@ -143,36 +114,25 @@ namespace AnliseHospitais.Controllers
 
         public IActionResult Sudeste()
         {
-            IQueryable<HospitalModel> query = _context.Hospitais.AsQueryable();
             string regiao = "SUDESTE";
 
-            var contagemHospitais = query
-                .GroupBy(x => new { x.Regiao, x.Uf, x.Municipio })
-                .Select(x => new
-                {
-                    Regiao = x.Key.Regiao,
-                    Uf = x.Key.Uf,
-                    Municipio = x.Key.Municipio,
-                    Quantidade = x.Count()
-                })
-                .Where(r => r.Regiao == regiao)
-                .ToList();
+            List<(string, int)> contagemHospitais = _regioesRepository.GetHospitaisPorRegiao(regiao);
 
             List<string> labels = new List<string>();
             List<int> data = new List<int>();
 
             foreach (var item in contagemHospitais)
             {
-                labels.Add($"{item.Regiao} - {item.Uf} - {item.Municipio}");
-                data.Add(item.Quantidade);
+                labels.Add(item.Item1);
+                data.Add(item.Item2);
             }
 
             ViewBag.Labels = labels;
             ViewBag.Data = data;
 
             // Obtenha a lista de estados e municípios do banco de dados
-            List<string> estados = _context.Hospitais.Select(x => x.Uf).Distinct().ToList();
-            List<string> municipios = _context.Hospitais.Select(x => x.Municipio).Distinct().ToList();
+            List<string?> estados = _context.Hospitais.Select(x => x.Uf).Distinct().ToList();
+            List<string?> municipios = _context.Hospitais.Select(x => x.Municipio).Distinct().ToList();
 
             // Passe os valores para a ViewBag
             ViewBag.Estados = estados;
@@ -184,36 +144,25 @@ namespace AnliseHospitais.Controllers
 
         public IActionResult Sul()
         {
-            IQueryable<HospitalModel> query = _context.Hospitais.AsQueryable();
             string regiao = "SUL";
 
-            var contagemHospitais = query
-                .GroupBy(x => new { x.Regiao, x.Uf, x.Municipio })
-                .Select(x => new
-                {
-                    Regiao = x.Key.Regiao,
-                    Uf = x.Key.Uf,
-                    Municipio = x.Key.Municipio,
-                    Quantidade = x.Count()
-                })
-                .Where(r => r.Regiao == regiao)
-                .ToList();
+            List<(string, int)> contagemHospitais = _regioesRepository.GetHospitaisPorRegiao(regiao);
 
             List<string> labels = new List<string>();
             List<int> data = new List<int>();
 
             foreach (var item in contagemHospitais)
             {
-                labels.Add($"{item.Regiao} - {item.Uf} - {item.Municipio}");
-                data.Add(item.Quantidade);
+                labels.Add(item.Item1);
+                data.Add(item.Item2);
             }
 
             ViewBag.Labels = labels;
             ViewBag.Data = data;
 
             // Obtenha a lista de estados e municípios do banco de dados
-            List<string> estados = _context.Hospitais.Select(x => x.Uf).Distinct().ToList();
-            List<string> municipios = _context.Hospitais.Select(x => x.Municipio).Distinct().ToList();
+            List<string?> estados = _context.Hospitais.Select(x => x.Uf).Distinct().ToList();
+            List<string?> municipios = _context.Hospitais.Select(x => x.Municipio).Distinct().ToList();
 
             // Passe os valores para a ViewBag
             ViewBag.Estados = estados;
