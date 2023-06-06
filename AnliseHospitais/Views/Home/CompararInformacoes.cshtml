@@ -1,0 +1,44 @@
+﻿
+@{
+    ViewData["Title"] = "CompararInformacoes";
+}
+
+<h1>CompararInformacoes</h1>
+
+
+<!-- Importe a biblioteca Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- Crie um elemento HTML para exibir o gráfico -->
+<canvas id="graficoComparacao"></canvas>
+
+<!-- Defina um script para renderizar o gráfico -->
+<script>
+    var ctx = document.getElementById('graficoComparacao').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'line', // Alterado para 'line' para gráfico de área
+        data: {
+            labels: @Html.Raw(Json.Serialize(ViewBag.Labels)),
+            datasets: [{
+                label: 'Estado',
+                data: @Html.Raw(Json.Serialize(ViewBag.DadosEstado)),
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1,
+                fill: true // Adicionado para preencher a área abaixo da linha
+            },
+            {
+                label: 'Município',
+                data: @Html.Raw(Json.Serialize(ViewBag.DadosMunicipio)),
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 1,
+                fill: true // Adicionado para preencher a área abaixo da linha
+            }]
+        },
+        options: {
+            // Configure as opções do gráfico, se necessário
+        }
+    });
+</script>
+

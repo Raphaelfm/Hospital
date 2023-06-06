@@ -1,0 +1,32 @@
+﻿@model AnliseHospitais.Models.SelecionarEstadoMunicipioViewModel
+
+@{
+    ViewData["Title"] = "SelecionarEstadoMunicipio";
+}
+
+<h1>SelecionarEstadoMunicipio</h1>
+
+
+
+<form method="post" asp-action="CompararInformacoes">
+    <div>
+        <label for="estado">Estado:</label>
+        <select id="estado" name="estado">
+            @foreach (var estado in Model.Estados)
+            {
+                <option value="@estado">@estado</option>
+            }
+        </select>
+    </div>
+    <div>
+        <label for="municipio">Município:</label>
+        <select id="municipio" name="municipio">
+            @foreach (var municipio in Model.Municipios)
+            {
+                <option value="@municipio">@municipio</option>
+            }
+        </select>
+    </div>
+    <button type="submit">Comparar</button>
+</form>
+
