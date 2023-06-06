@@ -39,7 +39,53 @@ namespace AnliseHospitais.Controllers
 
             return View(leitosPorTipoHospitais);
         }
-        
+
+        public IActionResult SelecionarEstadoMunicipio()
+        {
+            var viewModel = new SelecionarEstadoMunicipioViewModel();
+
+            // Obtenha a lista de estados e municípios do banco de dados
+            viewModel.Estados = _context.Hospitais.Select(x => x.Uf).Distinct().ToList();
+            viewModel.Municipios = _context.Hospitais.Select(x => x.Municipio).Distinct().ToList();
+
+            return View(viewModel);
+        }
+
+
+        public IActionResult CompararInformacoes(string estado, string municipio)
+        {
+            // Obtenha as informações para o estado selecionado
+            var leitosEstado = _context.Hospitais
+                .Where(x => x.Uf == estado)
+                .Sum(x => x.LeitosExistentes);
+
+            var hospitaisPublicosEstado = _context.Hospitais
+                .Where(x => x.Uf == estado && x.DescricaoNatureza == "HOSPITAL_PUBLICO")
+                .Count();
+
+            // Obtenha as informações para o município selecionado
+            var leitosMunicipio = _context.Hospitais
+                .Where(x => x.Uf == estado && x.Municipio == municipio)
+                .Sum(x => x.LeitosExistentes);
+
+            var hospitaisPublicosMunicipio = _context.Hospitais
+                .Where(x => x.Uf == estado && x.Municipio == municipio && x.DescricaoNatureza == "HOSPITAL_PUBLICO")
+                .Count();
+
+            // Crie os dados para exibir nos gráficos
+            List<string> labels = new List<string> { "Leitos", "Hospitais Públicos" };
+            List<int> dadosEstado = new List<int> { leitosEstado, hospitaisPublicosEstado };
+            List<int> dadosMunicipio = new List<int> { leitosMunicipio, hospitaisPublicosMunicipio };
+
+            ViewBag.Labels = labels;
+            ViewBag.DadosEstado = dadosEstado;
+            ViewBag.DadosMunicipio = dadosMunicipio;
+
+            // Retorne os dados para a view
+            return View();
+        }
+
+
 
         //public IActionResult DistribuicaoGeograficaHospitais()
         //{
