@@ -12,8 +12,181 @@
 <!-- Crie um elemento HTML para exibir o gráfico -->
 <canvas id="graficoComparacao"></canvas>
 
+<div style="position: absolute; top: -40px; left: 0; width: 100%; text-align: center;">
+    <span style="background-color: rgba(75, 192, 192, 0.2); padding: 5px; margin-right: 10px;"></span>
+    <span>Estado</span>
+    <span style="background-color: rgba(255, 99, 132, 0.2); padding: 5px; margin-left: 10px;"></span>
+    <span>Município</span>
+  </div>
+
+@*@{
+    // Converte ViewBag.DadosMunicipio em um array JavaScript
+    var dadosMunicipioArray = Json.Serialize(ViewBag.DadosMunicipio);
+}*@
+
 <!-- Defina um script para renderizar o gráfico -->
 <script>
+    // Função auxiliar para substituir valores nulos por NaN
+    //function replaceNullsWithNaN(arr) {
+    //    return arr.map(function (value) {
+    //        return value !== null ? value : NaN;
+    //    });
+    //}
+
+    //const config = {
+    //    type: 'radar',
+    //    data: {
+    //        labels: Html.Raw(Json.Serialize(ViewBag.Labels)),
+    //        datasets: [
+    //            {
+    //                label: 'Estado',
+    //                data: Html.Raw(Json.Serialize(ViewBag.DadosEstado)),
+    //                borderColor: 'red',
+    //                backgroundColor: 'rgba(255, 0, 0, 0.2)'
+    //            },
+    //            {
+    //                label: 'Município',
+    //                data: Html.Raw(Json.Serialize(ViewBag.DadosMunicipio)),
+    //                borderColor: 'orange',
+    //                backgroundColor: 'rgba(255, 165, 0, 0.2)'
+    //            },
+    //            // Adicione mais datasets de acordo com suas necessidades
+    //        ]
+    //    },
+    //    options: {
+    //        plugins: {
+    //            filler: {
+    //                propagate: false
+    //            },
+    //            'samples-filler-analyser': {
+    //                target: 'chart-analyser'
+    //            }
+    //        },
+    //        interaction: {
+    //            intersect: false
+    //        }
+    //    }
+    //};
+
+    //// Renderize o gráfico
+    //var ctx = document.getElementById('graficoComparacao').getContext('2d');
+    //var myChart = new Chart(ctx, config);
+
+    //const config = {
+    //    type: 'radar',
+    //    data: {
+    //        labels: ['D0', 'D1', 'D2', 'D3', 'D4', 'Município', 'D6'],
+    //        datasets: [
+    //            {
+    //                label: 'Estado',
+    //                data: [8, 12, 10, 6, 7, 9, 11],
+    //                borderColor: 'red',
+    //                backgroundColor: 'rgba(255, 0, 0, 0.2)'
+    //            },
+    //            {
+    //                label: 'Município',
+    //                data: [8, 12, 10, 6, 7, 9, 11],
+    //                borderColor: 'orange',
+    //                backgroundColor: 'rgba(255, 165, 0, 0.2)',
+    //                fill: 1
+    //            },
+
+    //            {
+    //                label: 'Teste',
+    //                data: [null, replaceNullsWithNaN(JSON.parse('Html.Raw(dadosMunicipioArray)'))],
+    //                borderColor: 'orange',
+    //                backgroundColor: 'rgba(255, 165, 0, 0.2)',
+    //                fill: 1
+    //            },
+    //            // Adicione mais datasets de acordo com suas necessidades
+    //        ]
+    //    },
+    //    options: {
+    //        plugins: {
+    //            filler: {
+    //                propagate: false
+    //            },
+    //            'samples-filler-analyser': {
+    //                target: 'chart-analyser'
+    //            }
+    //        },
+    //        interaction: {
+    //            intersect: false
+    //        },
+    //        scale: {
+    //            pointLabels: {
+    //                display: true
+    //            }
+    //        }
+    //    }
+    //};
+
+    //// Renderize o gráfico
+    //var ctx = document.getElementById('graficoComparacao').getContext('2d');
+    //var myChart = new Chart(ctx, config);
+
+    //var ctx = document.getElementById('graficoComparacao').getContext('2d');
+    //var myChart = new Chart(ctx, {
+    //    type: 'bar',
+    //    data: {
+    //        labels: Html.Raw(Json.Serialize(ViewBag.Labels)),
+    //        datasets: [{
+    //            label: 'Estado',
+    //            data: Html.Raw(Json.Serialize(ViewBag.DadosEstado)),
+    //            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+    //            borderColor: 'rgba(75, 192, 192, 1)',
+    //            borderWidth: 1,
+    //            barPercentage: 0.4, // Define a largura das barras
+    //            categoryPercentage: 0.5, // Define o espaçamento entre as barras
+    //            stack: 'stack1' // Define o nome da pilha para empilhar as barras
+    //        },
+    //        {
+    //            label: 'Quantidade de leitos no estado',
+    //            data: Html.Raw(Json.Serialize(ViewBag.DadosMunicipio)),
+    //            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+    //            borderColor: 'rgba(255, 99, 132, 1)',
+    //            borderWidth: 1,
+    //            barPercentage: 0.4, // Define a largura das barras
+    //            categoryPercentage: 0.5, // Define o espaçamento entre as barras
+    //            stack: 'stack1' // Define o nome da pilha para empilhar as barras
+    //        },
+    //        {
+    //            label: 'Município',
+    //            data: Html.Raw(Json.Serialize(ViewBag.DadosVazio)), // Dados vazios para criar a divisão
+    //            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+    //            borderColor: 'rgba(255, 99, 132, 1)', // Cor transparente para não exibir as barras vazias
+    //            borderWidth: 0, // Largura da borda 0 para não exibir as barras vazias
+    //            barPercentage: 0.4, // Define a largura das barras
+    //            categoryPercentage: 0.5, // Define o espaçamento entre as barras
+    //            stack: 'stack2' // Define o nome da pilha para empilhar as barras
+    //        }]
+    //    },
+    //    options: {
+    //        scales: {
+    //            x: {
+    //                stacked: true // Empilha as barras no eixo x
+    //            },
+    //            y: {
+    //                stacked: true // Empilha as barras no eixo y
+    //            }
+    //        },
+    //        plugins: {
+    //            tooltip: {
+    //                callbacks: {
+    //                    label: function (context) {
+    //                        var label = context.dataset.label || '';
+    //                        if (label) {
+    //                            label += ': ';
+    //                        }
+    //                        label += context.parsed.y;
+    //                        return label;
+    //                    }
+    //                }
+    //            }
+    //        }
+    //    }
+    //});
+
     var ctx = document.getElementById('graficoComparacao').getContext('2d');
     var myChart = new Chart(ctx, {
         type: 'line', // Alterado para 'line' para gráfico de área
@@ -37,7 +210,29 @@
             }]
         },
         options: {
-            // Configure as opções do gráfico, se necessário
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        precision: 0, // Define a precisão dos valores do eixo y (sem casas decimais)
+                        stepSize: 1 // Define o tamanho do intervalo entre os valores do eixo y
+                    }
+                }
+            },
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        label: function (context) {
+                            var label = context.dataset.label || '';
+                            if (label) {
+                                label += ': ';
+                            }
+                            label += context.parsed.y;
+                            return label;
+                        }
+                    }
+                }
+            }
         }
     });
 </script>
