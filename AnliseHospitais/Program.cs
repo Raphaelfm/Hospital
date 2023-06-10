@@ -20,6 +20,7 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.R
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<IRegioesRepository, RegioesRepository>();
+builder.Services.AddScoped<IEstadosRepository, EstadosRepository>();
 
 var app = builder.Build();
 

@@ -5,6 +5,6 @@
         /// <summary>
         /// List of allowed languages/cultures
         /// </summary>
-        public static List<string> Languages {  get; set; }
+        public static List<string>? Languages {  get; set; }
     }
 }
