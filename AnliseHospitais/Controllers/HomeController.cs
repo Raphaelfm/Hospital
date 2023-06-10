@@ -44,7 +44,7 @@ namespace AnliseHospitais.Controllers
         {
             var viewModel = new SelecionarEstadoMunicipioViewModel();
 
-            // Obtenha a lista de estados e municípios do banco de dados
+            // Obtem a lista de estados e municípios do banco de dados
             viewModel.Estados = _context.Hospitais.Select(x => x.Uf).Distinct().ToList();
             viewModel.Municipios = _context.Hospitais.Select(x => x.Municipio).Distinct().ToList();
 
@@ -54,7 +54,7 @@ namespace AnliseHospitais.Controllers
 
         public IActionResult CompararInformacoes(string estado, string municipio)
         {
-            // Obtenha as informações para o estado selecionado
+            // Obtem as informações para o estado selecionado
             var leitosEstado = _context.Hospitais
                 .Where(x => x.Uf == estado)
                 .Sum(x => x.LeitosExistentes);
@@ -63,7 +63,7 @@ namespace AnliseHospitais.Controllers
                 .Where(x => x.Uf == estado && x.DescricaoNatureza == "HOSPITAL_PUBLICO")
                 .Count();
 
-            // Obtenha as informações para o município selecionado
+            // Obtem as informações para o município selecionado
             var leitosMunicipio = _context.Hospitais
                 .Where(x => x.Uf == estado && x.Municipio == municipio)
                 .Sum(x => x.LeitosExistentes);
@@ -72,7 +72,7 @@ namespace AnliseHospitais.Controllers
                 .Where(x => x.Uf == estado && x.Municipio == municipio && x.DescricaoNatureza == "HOSPITAL_PUBLICO")
                 .Count();
 
-            // Crie os dados para exibir nos gráficos
+            // Cria os dados para exibir nos gráficos
             List<string> labels = new List<string> { "Leitos", "Hospitais Públicos" };
             List<int> dadosEstado = new List<int> { leitosEstado, hospitaisPublicosEstado };
             List<int> dadosMunicipio = new List<int> { leitosMunicipio, hospitaisPublicosMunicipio };
@@ -82,7 +82,7 @@ namespace AnliseHospitais.Controllers
             ViewBag.DadosMunicipio = dadosMunicipio;
 
             // Retorne os dados para a view
-            return View();
+            return PartialView("_CompararInformacoes");
         }
 
 

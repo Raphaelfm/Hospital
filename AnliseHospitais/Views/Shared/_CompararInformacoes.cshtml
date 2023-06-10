@@ -1,23 +1,10 @@
 ﻿
-@{
-    ViewData["Title"] = "CompararInformacoes";
-}
-
-<h1>CompararInformacoes</h1>
-
-
 <!-- Importe a biblioteca Chart.js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <!-- Crie um elemento HTML para exibir o gráfico -->
 <canvas id="graficoComparacao"></canvas>
 
-<div style="position: absolute; top: -40px; left: 0; width: 100%; text-align: center;">
-    <span style="background-color: rgba(75, 192, 192, 0.2); padding: 5px; margin-right: 10px;"></span>
-    <span>Estado</span>
-    <span style="background-color: rgba(255, 99, 132, 0.2); padding: 5px; margin-left: 10px;"></span>
-    <span>Município</span>
-  </div>
 
 @*@{
     // Converte ViewBag.DadosMunicipio em um array JavaScript
@@ -220,15 +207,16 @@
                 }
             },
             plugins: {
-                tooltip: {
-                    callbacks: {
-                        label: function (context) {
-                            var label = context.dataset.label || '';
-                            if (label) {
-                                label += ': ';
-                            }
-                            label += context.parsed.y;
-                            return label;
+                datalabels: {
+                    anchor: 'end',
+                    align: 'end',
+                    formatter: function (value, context) {
+                        if (context.dataset.label === 'Estado') {
+                            return 'Estado: ' + value;
+                        } else if (context.dataset.label === 'Município') {
+                            return 'Município: ' + value;
+                        } else {
+                            return value;
                         }
                     }
                 }

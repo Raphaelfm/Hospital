@@ -43,7 +43,18 @@
                                     <li><a class="dropdown-item" href="@Url.Action("Norte", "DistribuicaoGeografica")">Norte</a></li>
                                     <li><a class="dropdown-item" href="@Url.Action("Sudeste", "DistribuicaoGeografica")">Sudeste</a></li>
                                     <li><a class="dropdown-item" href="@Url.Action("Sul", "DistribuicaoGeografica")">Sul</a></li>
-                                    <li><a class="dropdown-item" href="@Url.Action("SelecionarEstadoMunicipio", "Home")">Teste</a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="DistribuicaoPorEstados" asp-action="SelecionarEstado">Distribuição por estados</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Comparação de dados
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                                    <li><a class="dropdown-item" href="@Url.Action("SelecionarEstadoMunicipio", "Home")">Leitos  e Hospitais UF x Municipios x Privado e Publico </a></li>
+                                    <li><a class="dropdown-item" href="@Url.Action("SelecionarEstadoMunicipio", "Home")">Especialidades de hospitais por cidade </a></li>
                                 </ul>
                             </li>
                             <li class="nav-item">
