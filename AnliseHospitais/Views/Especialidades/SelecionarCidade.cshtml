@@ -1,0 +1,58 @@
+﻿@model List<HospitalModel>
+
+@{
+    ViewData["Title"] = "SelecionarCidade";
+}
+
+<h1>Selecionar Cidades</h1>
+
+<form method="get" action="@Url.Action("LeitosUtitotal", "Especialidades")" class="row">
+    <div class="col-md-12">
+        <div class="form-group">
+            <label for="municipio1">Município 1:</label>
+            <select id="municipio1" name="cidade1" class="select2 form-control">
+                @foreach (var hospital in Model)
+                {
+                    <option value="@hospital.Municipio">@hospital.Municipio</option>
+                }
+            </select>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="form-group">
+            <label for="municipio2">Município 2:</label>
+            <select id="municipio2" name="cidade2" class="select2 form-control">
+                @foreach (var hospital in Model)
+                {
+                    <option value="@hospital.Municipio">@hospital.Municipio</option>
+                }
+            </select>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="form-group">
+            <label for="municipio3">Município 3:</label>
+            <select id="municipio3" name="cidade3" class="select2 form-control">
+                @foreach (var hospital in Model)
+                {
+                    <option value="@hospital.Municipio">@hospital.Municipio</option>
+                }
+            </select>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <br />
+        <button type="submit" class="btn btn-primary btn-block">Comparar</button>
+    </div>
+</form>
+
+@section scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+
+    <script>
+        $(function () {
+            $('.select2').select2();
+        });
+    </script>
+}

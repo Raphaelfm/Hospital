@@ -1,0 +1,74 @@
+﻿@model List<HospitalModel>
+
+@{
+    ViewData["Title"] = "LeitosUtitotal";
+}
+
+<h1 style="text-align: center">Leitos de Uti Total</h1>
+
+<div class="row">
+    <div class="col-md-12 d-flex justify-content-center align-items-center" style="height: 600px;">
+        <canvas id="myChart"></canvas>
+    </div>
+</div>
+
+@section scripts{
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        var utisPorCidade = @Html.Raw(Json.Serialize(Model));
+
+        var cidades = [];
+        var quantidadesDeUtis = [];
+
+        utisPorCidade.forEach(function (item) {
+            cidades.push(item.municipio);
+            quantidadesDeUtis.push(item.utiTotalExistentes);
+        });
+
+        var backgroundColors = [
+            'rgba(255, 0, 0, 0.2)',
+            'rgba(0, 255, 0, 0.2)',
+            'rgba(0, 0, 255, 0.2)'
+        ];
+
+        var borderColor = [
+            'red',
+            'green',
+            'blue'
+        ];
+
+        var config = {
+            type: 'radar',
+            data: {
+                labels: cidades,
+                datasets: [{
+                    label: 'Quantidades de UTIs',
+                    data: quantidadesDeUtis,
+                    borderColor: borderColor,
+                    backgroundColor: backgroundColors
+                }]
+            },
+            options: {
+                plugins: {
+                    filler: {
+                        propagate: false
+                    },
+                    'samples-filler-analyser': {
+                        target: 'chart-analyser'
+                    }
+                },
+                interaction: {
+                    intersect: false
+                },
+                scale: {
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        };
+
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctx, config);
+    </script>
+}
