@@ -21,6 +21,7 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<IRegioesRepository, RegioesRepository>();
 builder.Services.AddScoped<IEstadosRepository, EstadosRepository>();
+builder.Services.AddScoped<IEspecialidadesRepository, EspecialidadesRepository>();
 
 var app = builder.Build();
 
