@@ -18,11 +18,15 @@
         var utisPorCidade = @Html.Raw(Json.Serialize(Model));
 
         var cidades = [];
-        var quantidadesDeUtis = [];
+        var quantidadesDeUtisAdulto = [];
+        var utisPediatricas = [];
+        var utisNeoNatal = [];
 
         utisPorCidade.forEach(function (item) {
             cidades.push(item.municipio);
-            quantidadesDeUtis.push(item.utiTotalExistentes);
+            quantidadesDeUtisAdulto.push(item.utiAdultoExistente);
+            utisPediatricas.push(item.utiPediatricoExistentes);
+            utisNeoNatal.push(item.utiNeoNatalExistentes);
         });
 
         var backgroundColors = [
@@ -41,17 +45,31 @@
             type: 'radar',
             data: {
                 labels: cidades,
-                datasets: [{
-                    label: 'Quantidades de UTIs',
-                    data: quantidadesDeUtis,
-                    borderColor: borderColor,
-                    backgroundColor: backgroundColors
-                }]
+                datasets: [
+                    {
+                        label: 'UTIs de Adultos',
+                        data: quantidadesDeUtisAdulto,
+                        borderColor: borderColor,
+                        backgroundColor: backgroundColors
+                    }, 
+                    {
+                        label: 'UTIs Pediatricas',
+                        data: utisPediatricas,
+                        borderColor: borderColor,
+                        backgroundColor: backgroundColors
+                    },
+                    {
+                        label: 'UTIs Neo Natal',
+                        data: utisNeoNatal,
+                        borderColor: borderColor,
+                        backgroundColor: backgroundColors
+                    }
+                ]
             },
             options: {
                 plugins: {
                     filler: {
-                        propagate: false
+                        propagate: true
                     },
                     'samples-filler-analyser': {
                         target: 'chart-analyser'

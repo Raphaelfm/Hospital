@@ -19,7 +19,12 @@ namespace AnliseHospitais.Repositories
             var leitosPorCidade = _context.Hospitais
                 .Where(x => x.Municipio == cidade1 || x.Municipio == cidade2 || x.Municipio == cidade3)
                 .GroupBy(x => x.Municipio)
-                .Select(x => new HospitalModel { Municipio = x.Key, UtiTotalExistentes = x.Sum(h => h.UtiTotalExistentes) })
+                .Select(x => new HospitalModel { 
+                    Municipio = x.Key,
+                    UtiAdultoExistente = x.Sum(ua => ua.UtiAdultoExistente),
+                    UtiPediatricoExistentes = x.Sum(up => up.UtiPediatricoExistentes),
+                    UtiNeoNatalExistentes = x.Sum(uq => uq.UtiNeoNatalExistentes)
+                })
                 .ToListAsync();
 
             return leitosPorCidade;

@@ -27,6 +27,7 @@ namespace AnliseHospitais.Repositories
                     Quantidade = x.Count()
                 })
                 .Where(r => r.Uf == estado)
+                .OrderBy(q => q.Quantidade)
                 .ToList();
 
             List<(string, int)> resultados = contagemHospitais
